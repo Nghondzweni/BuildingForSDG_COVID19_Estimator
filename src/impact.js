@@ -13,9 +13,9 @@ export default class IMPACT {
         }
     }
     
-    getCurrentlyInfected = () => {
-        return (this.data.reportedCases * 10)
-    }
+    // getCurrentlyInfected = () => {
+    //     return (this.data.reportedCases * 10)
+    // }
 
     getInfectionsByRequestedTime = () => {
         var days;
