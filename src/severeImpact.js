@@ -13,11 +13,11 @@ export default class SEVEREIMPACT {
         }
     }
 
-    getCurrentlyInfected = () => {
+    getCurrentlyInfected () {
         return (this.data.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      reportedCases * 50);
     }
 
-    getInfectionsByRequestedTime = () => {
+    getInfectionsByRequestedTime () {
         var days;
         var factor;
         var infectionsByRequestedTime;
@@ -40,23 +40,23 @@ export default class SEVEREIMPACT {
         return (infectionsByRequestedTime); 
     }
 
-    getSevereCasesByRequestedTime = () => {
+    getSevereCasesByRequestedTime () {
         return ((15/100) * this.getInfectionsByRequestedTime());
     }
 
-    getHospitalBedsByRequestedTime = () => {
+    getHospitalBedsByRequestedTime () {
         return(((35 * this.data.totalHospitalBeds)/100) - this.getSevereCasesByRequestedTime())
     }
 
-    getCasesForICUByRequestedTime = () => {
+    getCasesForICUByRequestedTime () {
         return ((5/100) * this.getInfectionsByRequestedTime());
     }
 
-    getCasesForVentilatorsByRequestedTime = () => {
+    getCasesForVentilatorsByRequestedTime () {
         return ((2/100) * this.getInfectionsByRequestedTime());
     } 
 
-    getDollarsInFlight = () => {
+    getDollarsInFlight () {
         return(parseInt(((this.getInfectionsByRequestedTime() * 0.65) * 1.5) / 30));
     }
 }

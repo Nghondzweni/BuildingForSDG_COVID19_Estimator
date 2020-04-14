@@ -13,11 +13,11 @@ export default class IMPACT {
         }
     }
     
-    // getCurrentlyInfected = () => {
-    //     return (this.data.reportedCases * 10)
-    // }
+    getCurrentlyInfected () {
+        return (this.data.reportedCases * 10)
+    }
 
-    getInfectionsByRequestedTime = () => {
+    getInfectionsByRequestedTime (){
         var days;
         var factor;
         var infectionsByRequestedTime;
@@ -40,23 +40,23 @@ export default class IMPACT {
         return (infectionsByRequestedTime); 
     }
 
-    getSevereCasesByRequestedTime = () => {
+    getSevereCasesByRequestedTime () {
         return ((15/100) * this.getInfectionsByRequestedTime());
     }
     
-    getHospitalBedsByRequestedTime = () => {
+    getHospitalBedsByRequestedTime () {
         return(((35/100) * this.data.totalHospitalBeds) - this.getSevereCasesByRequestedTime())
     }
 
-    getCasesForICUByRequestedTime = () => {
+    getCasesForICUByRequestedTime () {
         return ((5/100) * this.getInfectionsByRequestedTime());
     }
 
-    getCasesForVentilatorsByRequestedTime = () => {
+    getCasesForVentilatorsByRequestedTime () {
         return ((2/100) * this.getInfectionsByRequestedTime());
     } 
     
-    getDollarsInFlight = () => {
+    getDollarsInFlight () {
         return(parseInt(((this.getInfectionsByRequestedTime() * 0.65) * 1.5) / 30));
     }
 }
