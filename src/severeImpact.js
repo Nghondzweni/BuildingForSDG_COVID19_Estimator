@@ -1,34 +1,62 @@
 export default class SEVEREIMPACT {
-    getCurrentlyInfected = (reportedCases) => {
-        return (reportedCases * 50);
+    constructor(data) {
+        this.data = data;
+
+        this.severeImpact = {
+            currentlyInfected : this.getCurrentlyInfected(),
+            infectionsByRequestedtime : this.getInfectionsByRequestedTime(),
+            severeCasesByRequestedTime : this.getSevereCasesByRequestedTime(),
+            hospitalBedsByRequestedTime : this.getHospitalBedsByRequestedTime(),
+            casesForICUByRequestedTime : this.getCasesForICUByRequestedTime(),
+            casesForVentilatorsByRequestedTime : this.getCasesForVentilatorsByRequestedTime(),
+            dollarsInFlight : this.getDollarsInFlight()
+        }
     }
 
-    getInfectionsByRequestedTime = (data) => {
+    getCurrentlyInfected = () => {
+        return (this.data.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      reportedCases * 50);
+    }
+
+    getInfectionsByRequestedTime = () => {
         var days;
         var factor;
         var infectionsByRequestedTime;
 
-        if (data.periodType == "days") {
-            days = data.timeToElapse;
+        if (this.data.periodType === "days") {
+            days = this.data.timeToElapse;
         } 
-        else if (data.periodType == "weeks") {
-            days = (data.timeToElapse * 7);
+        else if (this.data.periodType === "weeks") {
+            days = (this.data.timeToElapse * 7);
         }
-        else if (data.periodType == "months") {
-            days = (data.timeToElapse * 31);
+        else if (this.data.periodType === "months") {
+            days = (this.data.timeToElapse * 30);
         } 
         else {
             return(-1);
         }
 
-        factor = Math.round(days/3);
-        infectionsByRequestedTime = (this.getCurrentlyInfected(data.reportedCases) * (2**factor));
+        factor = parseInt(days/3);
+        infectionsByRequestedTime = (this.getCurrentlyInfected(this.data.reportedCases) * (2**factor));
         return (infectionsByRequestedTime); 
     }
 
-    getSevereCasesByRequestedTime = (data) => {
-        return ((15/100) * this.getInfectionsByRequestedTime(data));
-
+    getSevereCasesByRequestedTime = () => {
+        return ((15/100) * this.getInfectionsByRequestedTime());
     }
 
+    getHospitalBedsByRequestedTime = () => {
+        return(((35 * this.data.totalHospitalBeds)/100) - this.getSevereCasesByRequestedTime())
+    }
+
+    getCasesForICUByRequestedTime = () => {
+        return ((5/100) * this.getInfectionsByRequestedTime());
+    }
+
+    getCasesForVentilatorsByRequestedTime = () => {
+        return ((2/100) * this.getInfectionsByRequestedTime());
+    } 
+
+    getDollarsInFlight = () => {
+        return(parseInt(((this.getInfectionsByRequestedTime() * 0.65) * 1.5) / 30));
+    }
 }
